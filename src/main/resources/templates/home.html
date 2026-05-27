@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${pageTitle}">RapidRent</title>
+  <link rel="stylesheet" href="/css/rapidrent.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="/ui"><span class="logo-mark">R</span><span>RapidRent</span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="/ui">Acasă</a>
+      <a class="nav-link" href="/ui/cars">Mașini</a>
+      <a class="nav-link" href="/ui/provider" data-role="ROLE_FURNIZOR">Furnizor</a>
+      <a class="nav-link" href="/ui/admin" data-role="ROLE_ADMIN">Admin</a>
+      <a class="nav-link" href="/ui/login" data-auth-label>Autentificare</a>
+      <a class="nav-link hidden" href="#" data-logout>Ieșire</a>
+    </nav>
+  </div>
+</header>
+<section class="hero">
+  <div class="container">
+    <h1>Închirieri auto în București, simplu și rapid</h1>
+    <p>Compară mașini aprobate de administrator, alege perioada dorită și finalizează rezervarea online prin fluxul RapidRent.</p>
+  </div>
+</section>
+<main class="container search-shell">
+  <form class="search-card" id="homeSearchForm">
+    <div class="search-grid">
+      <div class="field"><label>Locație preluare</label><input name="location" value="București" placeholder="București Otopeni"></div>
+      <div class="field"><label>Preluare</label><input name="startDate" type="date" required></div>
+      <div class="field"><label>Predare</label><input name="endDate" type="date" required></div>
+      <div class="field"><label>Clasă</label><select name="category"><option value="">Orice</option><option>Economic</option><option>Compact</option><option>Sedan</option><option>SUV</option></select></div>
+      <div class="field"><label>Transmisie</label><select name="transmission"><option value="">Orice</option><option>Manuală</option><option>Automată</option></select></div>
+      <button class="btn btn-primary" type="submit">Caută</button>
+    </div>
+  </form>
+</main>
+<section class="section">
+  <div class="container">
+    <div class="section-title"><div><h2>De ce RapidRent?</h2><p class="muted">Interfață pentru toate rolurile cerute: client, furnizor și administrator.</p></div><a class="btn btn-ghost" href="/ui/cars">Vezi flota</a></div>
+    <div class="grid-3">
+      <article class="card"><div class="feature-icon">🔎</div><h3>Căutare rapidă</h3><p class="muted">Filtre după locație, categorie, transmisie și buget maxim.</p></article>
+      <article class="card"><div class="feature-icon">✅</div><h3>Mașini moderate</h3><p class="muted">Furnizorii adaugă mașini, iar adminul le aprobă înainte să devină vizibile.</p></article>
+      <article class="card"><div class="feature-icon">🪪</div><h3>Verificare documente</h3><p class="muted">Clientul își încarcă actele și poate rezerva după validarea adminului.</p></article>
+    </div>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="container grid-2">
+    <article class="card"><h2>Conturi demo</h2><p class="muted">Dacă baza de date este goală, aplicația creează automat date demo pentru prezentare.</p><div class="pills"><span class="pill">admin@rapidrent.ro / Admin123!</span><span class="pill">client@rapidrent.ro / Client123!</span><span class="pill">furnizor@rapidrent.ro / Furnizor123!</span></div></article>
+    <article class="card"><h2>Ai o flotă?</h2><p class="muted">Înregistrează-te ca furnizor, adaugă mașini și urmărește veniturile nete din dashboard.</p><a class="btn btn-primary" href="/ui/register">Creează cont</a></article>
+  </div>
+</section>
+<footer class="footer"><div class="container"><span>RapidRent © 2026</span><span>Platformă demonstrativă Spring Boot + Thymeleaf</span></div></footer>
+<script src="/js/rapidrent.js"></script>
+</body>
+</html>

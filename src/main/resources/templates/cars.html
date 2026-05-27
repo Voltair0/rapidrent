@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Mașini</title><link rel="stylesheet" href="/css/rapidrent.css"></head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="/ui"><span class="logo-mark">R</span><span>RapidRent</span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="/ui">Acasă</a>
+      <a class="nav-link" href="/ui/cars">Mașini</a>
+      <a class="nav-link" href="/ui/provider" data-role="ROLE_FURNIZOR">Furnizor</a>
+      <a class="nav-link" href="/ui/admin" data-role="ROLE_ADMIN">Admin</a>
+      <a class="nav-link" href="/ui/login" data-auth-label>Autentificare</a>
+      <a class="nav-link hidden" href="#" data-logout>Ieșire</a>
+    </nav>
+  </div>
+</header>
+<section class="section" style="background:#fff;padding-bottom:28px">
+  <div class="container">
+    <h1>Mașini disponibile</h1><p class="muted">Alege mașina și perioada. Pentru rezervare trebuie să fii autentificat ca client și să ai documentele validate.</p>
+    <form class="search-card" id="carsSearchForm">
+      <div class="search-grid">
+        <div class="field"><label>Locație</label><input name="location" placeholder="București"></div>
+        <div class="field"><label>Preluare</label><input name="startDate" type="date" required></div>
+        <div class="field"><label>Predare</label><input name="endDate" type="date" required></div>
+        <div class="field"><label>Clasă</label><select name="category"><option value="">Orice</option><option>Economic</option><option>Compact</option><option>Sedan</option><option>SUV</option></select></div>
+        <div class="field"><label>Buget / zi</label><input name="maxPrice" type="number" min="0" placeholder="ex. 250"></div>
+        <button class="btn btn-primary" type="submit">Actualizează</button>
+      </div>
+    </form>
+  </div>
+</section>
+<main class="section"><div class="container car-list" id="carsList"></div></main>
+<footer class="footer"><div class="container"><span>RapidRent</span><span>Rezervări rapide și transparente</span></div></footer>
+<script src="/js/rapidrent.js"></script>
+</body></html>

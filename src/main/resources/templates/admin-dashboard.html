@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('RapidRent - Dashboard admin')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<main class="dashboard-shell container">
+    <section class="dashboard-header">
+        <div>
+            <span class="eyebrow light">Administrator</span>
+            <h1>Panou de control</h1>
+            <p>Moderare flotă, utilizatori și rapoarte financiare globale.</p>
+        </div>
+    </section>
+
+    <section class="metric-grid four">
+        <div class="metric-card"><span>Total mașini</span><strong th:text="${totalCars}">48</strong></div>
+        <div class="metric-card"><span>Active</span><strong th:text="${activeCars}">39</strong></div>
+        <div class="metric-card"><span>În service</span><strong th:text="${serviceCars}">4</strong></div>
+        <div class="metric-card"><span>Comisioane lunare</span><strong th:text="${monthlyCommission}">12.840 RON</strong></div>
+    </section>
+
+    <section class="dashboard-grid-two">
+        <div class="panel white-panel">
+            <h2>Încasări luna curentă</h2>
+            <div class="bar-chart" aria-label="Grafic demo încasări">
+                <span style="height: 45%"></span>
+                <span style="height: 64%"></span>
+                <span style="height: 52%"></span>
+                <span style="height: 82%"></span>
+                <span style="height: 68%"></span>
+                <span style="height: 92%"></span>
+            </div>
+        </div>
+        <div class="panel white-panel">
+            <h2>Acțiuni rapide</h2>
+            <div class="quick-actions">
+                <button class="btn btn-secondary">Moderare vehicule</button>
+                <button class="btn btn-secondary">Utilizatori</button>
+                <button class="btn btn-secondary">Rapoarte financiare</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel white-panel">
+        <div class="section-heading compact">
+            <h2>Vehicule în așteptare</h2>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead><tr><th>Mașină</th><th>Furnizor</th><th>Număr</th><th>Status</th><th>Acțiuni</th></tr></thead>
+                <tbody>
+                <tr th:each="car : ${pendingCars}">
+                    <td th:text="${car.name}">Audi A4</td>
+                    <td th:text="${car.provider}">Premium Rent</td>
+                    <td th:text="${car.plateNumber}">B-99-RPD</td>
+                    <td><span class="status-pill warning" th:text="${car.status}">Așteaptă verificare</span></td>
+                    <td class="table-actions">
+                        <button class="btn btn-small">Aprobă</button>
+                        <button class="btn btn-small btn-danger">Respinge</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+<script th:src="@{/js/rapidrent.js}"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Login</title><link rel="stylesheet" href="/css/rapidrent.css"></head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="/ui"><span class="logo-mark">R</span><span>RapidRent</span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="/ui">Acasă</a>
+      <a class="nav-link" href="/ui/cars">Mașini</a>
+      <a class="nav-link" href="/ui/provider" data-role="ROLE_FURNIZOR">Furnizor</a>
+      <a class="nav-link" href="/ui/admin" data-role="ROLE_ADMIN">Admin</a>
+      <a class="nav-link" href="/ui/login" data-auth-label>Autentificare</a>
+      <a class="nav-link hidden" href="#" data-logout>Ieșire</a>
+    </nav>
+  </div>
+</header>
+<main class="container auth-wrap">
+  <section class="card auth-card">
+    <h1>Autentificare</h1><p class="muted">Intră în cont pentru rezervări, dashboard furnizor sau administrare.</p>
+    <div id="authAlert" class="alert"></div>
+    <form id="loginForm" class="form-stack">
+      <input class="input" name="email" type="email" placeholder="Email" required>
+      <input class="input" name="password" type="password" placeholder="Parolă" required>
+      <button class="btn btn-primary btn-block" type="submit">Autentifică-te</button>
+    </form>
+    <hr style="border:0;border-top:1px solid var(--line);margin:24px 0">
+    <h3>Ai uitat parola?</h3>
+    <div id="resetAlert" class="alert"></div>
+    <form id="resetForm" class="form-stack">
+      <input class="input" name="email" type="email" placeholder="Email pentru resetare" required>
+      <button class="btn btn-ghost" type="submit">Resetează parola</button>
+    </form>
+    <p class="muted small">Nu ai cont? <a href="/ui/register"><strong>Înregistrează-te</strong></a></p>
+  </section>
+</main>
+<script src="/js/rapidrent.js"></script>
+</body></html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Register</title><link rel="stylesheet" href="/css/rapidrent.css"></head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="/ui"><span class="logo-mark">R</span><span>RapidRent</span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="/ui">Acasă</a>
+      <a class="nav-link" href="/ui/cars">Mașini</a>
+      <a class="nav-link" href="/ui/provider" data-role="ROLE_FURNIZOR">Furnizor</a>
+      <a class="nav-link" href="/ui/admin" data-role="ROLE_ADMIN">Admin</a>
+      <a class="nav-link" href="/ui/login" data-auth-label>Autentificare</a>
+      <a class="nav-link hidden" href="#" data-logout>Ieșire</a>
+    </nav>
+  </div>
+</header>
+<main class="container auth-wrap">
+  <section class="card auth-card">
+    <h1>Creează cont</h1><p class="muted">Alege cont client sau bifează opțiunea pentru furnizor.</p>
+    <div id="registerAlert" class="alert"></div>
+    <form id="registerForm" class="form-stack">
+      <input class="input" name="username" placeholder="Nume utilizator" required>
+      <input class="input" name="email" type="email" placeholder="Email" required>
+      <input class="input" name="password" type="password" placeholder="Parolă" required minlength="6">
+      <label class="check"><input type="checkbox" name="isProvider"> Vreau cont de furnizor pentru a lista mașini.</label>
+      <label class="check"><input type="checkbox" name="gdprConsent" required> Accept termenii GDPR și prelucrarea datelor pentru funcționarea platformei.</label>
+      <button class="btn btn-primary btn-block" type="submit">Înregistrează contul</button>
+    </form>
+    <p class="muted small">Ai deja cont? <a href="/ui/login"><strong>Autentifică-te</strong></a></p>
+  </section>
+</main>
+<script src="/js/rapidrent.js"></script>
+</body></html>

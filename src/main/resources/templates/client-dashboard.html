@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('RapidRent - Contul meu')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<main class="dashboard-shell container">
+    <section class="dashboard-header">
+        <div>
+            <span class="eyebrow light">Client</span>
+            <h1>Contul meu</h1>
+            <p>Urmărește rezervările, statusul documentelor și datele de profil.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/ui/cars}">Caută o mașină</a>
+    </section>
+
+    <section class="metric-grid">
+        <div class="metric-card"><span>Rezervări active</span><strong>1</strong></div>
+        <div class="metric-card"><span>Documente</span><strong>În verificare</strong></div>
+        <div class="metric-card"><span>Beneficii</span><strong>Client standard</strong></div>
+    </section>
+
+    <section class="panel white-panel">
+        <div class="section-heading compact">
+            <h2>Istoric rezervări</h2>
+            <a class="link-arrow" th:href="@{/ui/cars}">Rezervare nouă</a>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr><th>Cod</th><th>Mașină</th><th>Locație</th><th>Perioadă</th><th>Status</th><th>Total</th><th></th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="reservation : ${reservations}">
+                    <td th:text="${reservation.code}">RR-1042</td>
+                    <td th:text="${reservation.carName}">Toyota Corolla</td>
+                    <td th:text="${reservation.location}">Otopeni</td>
+                    <td th:text="|${reservation.pickupDate} - ${reservation.returnDate}|">2026-06-01 - 2026-06-05</td>
+                    <td><span class="status-pill" th:text="${reservation.status}">Confirmată</span></td>
+                    <td th:text="${reservation.total}">980 RON</td>
+                    <td><button class="btn btn-small">Detalii</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="dashboard-grid-two">
+        <div class="panel white-panel">
+            <h2>Verificare cont</h2>
+            <p>Încarcă buletinul și permisul auto pentru a putea finaliza rezervări.</p>
+            <a class="btn btn-secondary" th:href="@{/ui/verification}">Încarcă documente</a>
+        </div>
+        <div class="panel white-panel">
+            <h2>Schimbare parolă</h2>
+            <form class="stack-form compact-form" action="#" method="post">
+                <input class="input" type="password" placeholder="Parola veche">
+                <input class="input" type="password" placeholder="Parola nouă">
+                <button class="btn btn-primary" type="submit">Salvează</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+<script th:src="@{/js/rapidrent.js}"></script>
+</body>
+</html>

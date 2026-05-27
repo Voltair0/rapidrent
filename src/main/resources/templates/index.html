@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('RapidRent - Închirieri auto')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<main>
+    <section class="hero hero-home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+            <div class="eyebrow">Închirieri auto în România</div>
+            <h1>Găsește mașina potrivită pentru următoarea ta călătorie.</h1>
+            <p class="hero-copy">Compară rapid mașini disponibile, alege perioada și rezervă simplu, direct din browser.</p>
+
+            <form class="search-card" th:action="@{/ui/cars}" method="get">
+                <div class="form-row form-row-large">
+                    <label>
+                        <span>Locație de preluare</span>
+                        <select name="pickupLocation" class="input">
+                            <option th:each="location : ${locations}" th:value="${location}" th:text="${location}" th:selected="${location == search.pickupLocation}"></option>
+                        </select>
+                    </label>
+                    <label class="dropoff-field hidden" data-dropoff-field>
+                        <span>Locație de predare</span>
+                        <select name="dropoffLocation" class="input">
+                            <option th:each="location : ${locations}" th:value="${location}" th:text="${location}" th:selected="${location == search.dropoffLocation}"></option>
+                        </select>
+                    </label>
+                    <label class="checkbox-inline search-checkbox">
+                        <input type="checkbox" data-toggle-dropoff>
+                        Predau mașina în altă locație
+                    </label>
+                </div>
+
+                <div class="form-grid form-grid-search">
+                    <label>
+                        <span>Dată preluare</span>
+                        <input class="input" type="date" name="pickupDate" th:value="${search.pickupDate}" th:min="${today}">
+                    </label>
+                    <label>
+                        <span>Ora</span>
+                        <select class="input" name="pickupTime">
+                            <option th:each="time : ${times}" th:value="${time}" th:text="${time}" th:selected="${time == search.pickupTime}"></option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Dată predare</span>
+                        <input class="input" type="date" name="returnDate" th:value="${search.returnDate}" th:min="${today}">
+                    </label>
+                    <label>
+                        <span>Ora</span>
+                        <select class="input" name="returnTime">
+                            <option th:each="time : ${times}" th:value="${time}" th:text="${time}" th:selected="${time == search.returnTime}"></option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="form-grid form-grid-search secondary-search">
+                    <label>
+                        <span>Clasă auto</span>
+                        <select class="input" name="carClass">
+                            <option th:each="carClass : ${carClasses}" th:value="${carClass}" th:text="${carClass}" th:selected="${carClass == search.carClass}"></option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Transmisie</span>
+                        <select class="input" name="transmission">
+                            <option th:each="transmission : ${transmissions}" th:value="${transmission}" th:text="${transmission}" th:selected="${transmission == search.transmission}"></option>
+                        </select>
+                    </label>
+                    <div class="search-cta-wrap">
+                        <button class="btn btn-search" type="submit">Caută</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="trust-strip container">
+        <div><strong>Fără costuri ascunse</strong><span>Prețul final este afișat înainte de rezervare.</span></div>
+        <div><strong>Rezervare rapidă</strong><span>Flux clar pentru client autentificat.</span></div>
+        <div><strong>Flotă verificată</strong><span>Mașinile furnizorilor pot fi moderate de admin.</span></div>
+    </section>
+
+    <section class="container section">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow light">Categorii populare</span>
+                <h2>Alege după stilul tău de călătorie</h2>
+            </div>
+            <a class="link-arrow" th:href="@{/ui/cars}">Vezi toate mașinile</a>
+        </div>
+        <div class="category-grid">
+            <a class="category-card" th:href="@{/ui/cars(carClass='Economică')}"><span>🚗</span><strong>Economică</strong><small>Buget optim</small></a>
+            <a class="category-card" th:href="@{/ui/cars(carClass='Compact')}"><span>🚙</span><strong>Compact</strong><small>Oraș & weekend</small></a>
+            <a class="category-card" th:href="@{/ui/cars(carClass='SUV')}"><span>🚘</span><strong>SUV</strong><small>Spațiu și confort</small></a>
+            <a class="category-card" th:href="@{/ui/cars(carClass='Lux')}"><span>✨</span><strong>Lux</strong><small>Experiență premium</small></a>
+        </div>
+    </section>
+
+    <section class="container section">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow light">Recomandate</span>
+                <h2>Mașini disponibile acum</h2>
+            </div>
+        </div>
+        <div class="car-grid">
+            <article class="car-card" th:each="car : ${featuredCars}">
+                <div class="car-visual"><span th:text="${car.carClass}">SUV</span></div>
+                <div class="car-body">
+                    <div class="car-title-row">
+                        <h3 th:text="${car.displayName()}">Toyota Corolla</h3>
+                        <span class="status-pill" th:text="${car.status}">Disponibil</span>
+                    </div>
+                    <p class="muted" th:text="${car.location}">București Otopeni</p>
+                    <div class="car-specs">
+                        <span th:text="|${car.seats} locuri|">5 locuri</span>
+                        <span th:text="${car.transmission}">Automată</span>
+                        <span th:text="${car.fuel}">Hybrid</span>
+                    </div>
+                    <div class="price-row">
+                        <span>de la <strong th:text="|${car.pricePerDay} RON|">245 RON</strong> / zi</span>
+                        <a class="btn btn-secondary" th:href="@{/ui/cars(carClass=${car.carClass})}">Rezervă</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="container section split-section">
+        <div class="panel panel-blue">
+            <span class="eyebrow">Pentru clienți</span>
+            <h2>Rezervări și documente într-un singur cont</h2>
+            <p>Încarci actele, urmărești rezervările și poți anula rezervările viitoare conform politicii platformei.</p>
+            <a class="btn btn-light" th:href="@{/ui/client}">Deschide contul meu</a>
+        </div>
+        <div class="panel panel-yellow">
+            <span class="eyebrow">Pentru furnizori</span>
+            <h2>Listează flota și urmărește veniturile</h2>
+            <p>Adaugi mașini, aștepți aprobarea administratorului și vezi rapid performanța flotei.</p>
+            <a class="btn btn-dark" th:href="@{/ui/provider}">Dashboard furnizor</a>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+<script th:src="@{/js/rapidrent.js}"></script>
+</body>
+</html>

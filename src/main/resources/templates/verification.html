@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Verificare</title><link rel="stylesheet" href="/css/rapidrent.css"></head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="/ui"><span class="logo-mark">R</span><span>RapidRent</span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="/ui">Acasă</a>
+      <a class="nav-link" href="/ui/cars">Mașini</a>
+      <a class="nav-link" href="/ui/provider" data-role="ROLE_FURNIZOR">Furnizor</a>
+      <a class="nav-link" href="/ui/admin" data-role="ROLE_ADMIN">Admin</a>
+      <a class="nav-link" href="/ui/login" data-auth-label>Autentificare</a>
+      <a class="nav-link hidden" href="#" data-logout>Ieșire</a>
+    </nav>
+  </div>
+</header>
+<main class="section">
+  <div class="container panel-layout">
+    <aside class="sidebar"><div class="card"><a class="side-link" href="/ui/client">Rezervările mele</a><a class="side-link active" href="/ui/verification">Verificare cont</a><a class="side-link" href="/ui/cars">Caută mașini</a></div></aside>
+    <section class="card">
+      <h1>Încărcare documente</h1><p class="muted" id="verificationUser">Status cont</p><p class="muted">Încarcă imaginea cărții de identitate și a permisului. Administratorul le poate aproba din dashboard.</p>
+      <div id="verificationAlert" class="alert"></div>
+      <form id="verificationForm" class="form-stack" enctype="multipart/form-data">
+        <label>Carte de identitate<input class="input" type="file" name="idCard" accept="image/*,.pdf" required></label>
+        <label>Permis de conducere<input class="input" type="file" name="driverLicense" accept="image/*,.pdf" required></label>
+        <button class="btn btn-primary" type="submit">Trimite documentele</button>
+      </form>
+    </section>
+  </div>
+</main>
+<script src="/js/rapidrent.js"></script>
+</body></html>

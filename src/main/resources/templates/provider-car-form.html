@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Adaugă mașină</title><link rel="stylesheet" href="/css/rapidrent.css"></head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="/ui"><span class="logo-mark">R</span><span>RapidRent</span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="/ui">Acasă</a>
+      <a class="nav-link" href="/ui/cars">Mașini</a>
+      <a class="nav-link" href="/ui/provider" data-role="ROLE_FURNIZOR">Furnizor</a>
+      <a class="nav-link" href="/ui/admin" data-role="ROLE_ADMIN">Admin</a>
+      <a class="nav-link" href="/ui/login" data-auth-label>Autentificare</a>
+      <a class="nav-link hidden" href="#" data-logout>Ieșire</a>
+    </nav>
+  </div>
+</header>
+<main class="section">
+  <div class="container panel-layout">
+    <aside class="sidebar"><div class="card"><a class="side-link" href="/ui/provider">Dashboard</a><a class="side-link active" href="/ui/provider/cars/new">Adaugă mașină</a></div></aside>
+    <section class="card">
+      <h1>Adaugă o mașină</h1><p class="muted">Mașina va fi salvată cu status PENDING și devine vizibilă după aprobarea administratorului.</p>
+      <div id="providerCarAlert" class="alert"></div>
+      <form id="providerCarForm" class="form-stack">
+        <div class="grid-2"><input class="input" name="brand" placeholder="Marcă" required><input class="input" name="model" placeholder="Model" required></div>
+        <div class="grid-2"><input class="input" name="licensePlate" placeholder="Număr înmatriculare" required><input class="input" name="price" type="number" min="1" step="0.01" placeholder="Preț / zi" required></div>
+        <div class="grid-2"><input class="input" name="location" placeholder="Locație, ex. București Otopeni"><select class="input" name="category"><option>Economic</option><option>Compact</option><option>Sedan</option><option>SUV</option></select></div>
+        <div class="grid-2"><select class="input" name="transmission"><option>Manuală</option><option>Automată</option></select><input class="input" name="seats" type="number" min="2" max="9" value="5" placeholder="Locuri"></div>
+        <input class="input" name="imageUrl" type="url" placeholder="URL imagine opțional">
+        <button class="btn btn-primary" type="submit">Trimite spre aprobare</button>
+      </form>
+    </section>
+  </div>
+</main>
+<script src="/js/rapidrent.js"></script>
+</body></html>

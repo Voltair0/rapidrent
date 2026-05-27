@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('RapidRent - Dashboard furnizor')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<main class="dashboard-shell container">
+    <section class="dashboard-header">
+        <div>
+            <span class="eyebrow light">Furnizor</span>
+            <h1>Dashboard flotă</h1>
+            <p>Monitorizează mașinile listate, gradul de ocupare și veniturile nete.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/ui/provider/cars/new}">Adaugă mașină</a>
+    </section>
+
+    <section class="metric-grid">
+        <div class="metric-card"><span>Mașini listate</span><strong th:text="${#lists.size(providerCars)}">4</strong></div>
+        <div class="metric-card"><span>Grad ocupare</span><strong th:text="${occupancy}">68%</strong></div>
+        <div class="metric-card"><span>Venit net lunar</span><strong th:text="${monthlyIncome}">7.450 RON</strong></div>
+    </section>
+
+    <section class="panel white-panel">
+        <div class="section-heading compact">
+            <h2>Flota mea</h2>
+            <a class="link-arrow" th:href="@{/ui/provider/cars/new}">Adaugă vehicul</a>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead><tr><th>Mașină</th><th>Clasă</th><th>Locație</th><th>Status</th><th>Preț / zi</th><th></th></tr></thead>
+                <tbody>
+                <tr th:each="car : ${providerCars}">
+                    <td th:text="${car.displayName()}">Dacia Logan</td>
+                    <td th:text="${car.carClass}">Economică</td>
+                    <td th:text="${car.location}">Otopeni</td>
+                    <td><span class="status-pill" th:text="${car.status}">Disponibil</span></td>
+                    <td th:text="|${car.pricePerDay} RON|">145 RON</td>
+                    <td><button class="btn btn-small">Editează</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+<script th:src="@{/js/rapidrent.js}"></script>
+</body>
+</html>

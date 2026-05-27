@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Admin</title><link rel="stylesheet" href="/css/rapidrent.css"></head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="/ui"><span class="logo-mark">R</span><span>RapidRent</span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="/ui">Acasă</a>
+      <a class="nav-link" href="/ui/cars">Mașini</a>
+      <a class="nav-link" href="/ui/provider" data-role="ROLE_FURNIZOR">Furnizor</a>
+      <a class="nav-link" href="/ui/admin" data-role="ROLE_ADMIN">Admin</a>
+      <a class="nav-link" href="/ui/login" data-auth-label>Autentificare</a>
+      <a class="nav-link hidden" href="#" data-logout>Ieșire</a>
+    </nav>
+  </div>
+</header>
+<main class="section" id="adminPage">
+  <div class="container panel-layout">
+    <aside class="sidebar"><div class="card"><a class="side-link active" href="/ui/admin">Dashboard</a><a class="side-link" href="#pendingCars">Mașini pending</a><a class="side-link" href="#pendingDocs">Documente pending</a></div></aside>
+    <section class="form-stack">
+      <div class="card"><h1>Dashboard administrator</h1><p class="muted">Monitorizare flotă, comisioane și moderare.</p><div id="adminAlert" class="alert"></div></div>
+      <div class="kpi-grid"><div class="kpi"><div class="muted">Mașini active</div><div class="kpi-value" id="adminActiveCars">0</div></div><div class="kpi"><div class="muted">Profit platformă</div><div class="kpi-value" id="adminProfit">0 RON</div></div><div class="kpi"><div class="muted">Comision</div><div class="kpi-value">10%</div></div></div>
+      <div class="card"><h2>Ultimele rezervări</h2><ul id="adminLastReservations"><li>Se încarcă...</li></ul></div>
+      <div class="card" id="pendingCars"><h2>Mașini în așteptare</h2><div style="overflow:auto"><table class="table"><thead><tr><th>ID</th><th>Mașină</th><th>Locație</th><th>Preț</th><th>Acțiuni</th></tr></thead><tbody id="pendingCarRows"><tr><td colspan="5">Se încarcă...</td></tr></tbody></table></div></div>
+      <div class="card" id="pendingDocs"><h2>Documente clienți</h2><div style="overflow:auto"><table class="table"><thead><tr><th>ID</th><th>Client</th><th>Email</th><th>Fișiere</th><th>Acțiuni</th></tr></thead><tbody id="pendingDocumentRows"><tr><td colspan="5">Se încarcă...</td></tr></tbody></table></div></div>
+    </section>
+  </div>
+</main>
+<script src="/js/rapidrent.js"></script>
+</body></html>

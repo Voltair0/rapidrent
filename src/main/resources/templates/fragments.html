@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(pageTitle)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">RapidRent</title>
+    <meta name="description" content="RapidRent - platformă web pentru închirieri auto.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/rapidrent.css}">
+</head>
+<body>
+<nav class="topbar" th:fragment="nav">
+    <a class="brand" th:href="@{/ui}">
+        <span class="brand-mark">RR</span>
+        <span>RapidRent</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Deschide meniul" data-nav-toggle>☰</button>
+    <div class="nav-links" data-nav-links>
+        <a th:href="@{/ui/cars}">Mașini</a>
+        <a th:href="@{/ui/client}">Contul meu</a>
+        <a th:href="@{/ui/provider}">Furnizor</a>
+        <a th:href="@{/ui/admin}">Admin</a>
+        <a class="nav-link-outline" th:href="@{/ui/login}">Autentificare</a>
+        <a class="nav-link-primary" th:href="@{/ui/register}">Creează cont</a>
+    </div>
+</nav>
+
+<footer class="footer" th:fragment="footer">
+    <div>
+        <strong>RapidRent</strong>
+        <p>Închirieri auto rapide, transparente și sigure.</p>
+    </div>
+    <div class="footer-links">
+        <a th:href="@{/ui/cars}">Caută mașini</a>
+        <a th:href="@{/ui/verification}">Verificare cont</a>
+        <a th:href="@{/ui/provider}">Devino furnizor</a>
+    </div>
+    <small th:text="|© ${currentYear} RapidRent|"></small>
+</footer>
+</body>
+</html>

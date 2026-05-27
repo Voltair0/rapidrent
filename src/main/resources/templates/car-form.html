@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('RapidRent - Adaugă mașină')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+
+<main class="form-page container">
+    <section class="panel white-panel form-panel">
+        <span class="eyebrow light">Furnizor</span>
+        <h1>Adaugă o mașină în flotă</h1>
+        <p>Vehiculul va apărea ca „În așteptare” până la aprobarea administratorului.</p>
+
+        <form action="/cars" method="post" data-api-form="car" class="stack-form">
+            <div class="form-message" data-form-message></div>
+            <div class="form-grid two">
+                <label><span>Marcă</span><input class="input" name="brand" placeholder="ex: Toyota" required></label>
+                <label><span>Model</span><input class="input" name="model" placeholder="ex: Corolla" required></label>
+            </div>
+            <div class="form-grid two">
+                <label><span>Număr înmatriculare</span><input class="input" name="plateNumber" placeholder="B-123-RRT" required></label>
+                <label><span>Preț / zi (RON)</span><input class="input" type="number" name="pricePerDay" min="1" placeholder="245" required></label>
+            </div>
+            <div class="form-grid two">
+                <label>
+                    <span>Clasă auto</span>
+                    <select class="input" name="carClass">
+                        <option th:each="carClass : ${carClasses}" th:if="${carClass != 'Toate'}" th:value="${carClass}" th:text="${carClass}"></option>
+                    </select>
+                </label>
+                <label>
+                    <span>Transmisie</span>
+                    <select class="input" name="transmission">
+                        <option value="Manuală">Manuală</option>
+                        <option value="Automată">Automată</option>
+                    </select>
+                </label>
+            </div>
+            <label><span>URL imagine</span><input class="input" name="imageUrl" placeholder="https://..."></label>
+            <label><span>Descriere</span><textarea class="input" name="description" rows="4" placeholder="Dotări, condiții, asigurare..."></textarea></label>
+            <button class="btn btn-primary" type="submit">Trimite spre aprobare</button>
+        </form>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+<script th:src="@{/js/rapidrent.js}"></script>
+</body>
+</html>
