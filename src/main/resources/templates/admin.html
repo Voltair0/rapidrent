@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="${pageTitle}">Admin</title><link rel="stylesheet" href="/css/rapidrent.css"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${pageTitle}">Admin</title>
+  <link rel="stylesheet" href="/css/rapidrent.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 <body>
 <header class="topbar">
   <div class="container nav">
@@ -15,17 +21,106 @@
     </nav>
   </div>
 </header>
+
 <main class="section" id="adminPage">
   <div class="container panel-layout">
-    <aside class="sidebar"><div class="card"><a class="side-link active" href="/ui/admin">Dashboard</a><a class="side-link" href="#pendingCars">Mașini pending</a><a class="side-link" href="#pendingDocs">Documente pending</a></div></aside>
+    
+    <aside class="sidebar">
+      <div class="card">
+        <a class="side-link active" href="/ui/admin">Dashboard</a>
+        <a class="side-link" href="#pendingCars">Mașini pending</a>
+        <a class="side-link" href="#pendingDocs">Documente pending</a>
+      </div>
+    </aside>
+    
     <section class="form-stack">
-      <div class="card"><h1>Dashboard administrator</h1><p class="muted">Monitorizare flotă, comisioane și moderare.</p><div id="adminAlert" class="alert"></div></div>
-      <div class="kpi-grid"><div class="kpi"><div class="muted">Mașini active</div><div class="kpi-value" id="adminActiveCars">0</div></div><div class="kpi"><div class="muted">Profit platformă</div><div class="kpi-value" id="adminProfit">0 RON</div></div><div class="kpi"><div class="muted">Comision</div><div class="kpi-value">10%</div></div></div>
-      <div class="card"><h2>Ultimele rezervări</h2><ul id="adminLastReservations"><li>Se încarcă...</li></ul></div>
-      <div class="card" id="pendingCars"><h2>Mașini în așteptare</h2><div style="overflow:auto"><table class="table"><thead><tr><th>ID</th><th>Mașină</th><th>Locație</th><th>Preț</th><th>Acțiuni</th></tr></thead><tbody id="pendingCarRows"><tr><td colspan="5">Se încarcă...</td></tr></tbody></table></div></div>
-      <div class="card" id="pendingDocs"><h2>Documente clienți</h2><div style="overflow:auto"><table class="table"><thead><tr><th>ID</th><th>Client</th><th>Email</th><th>Fișiere</th><th>Acțiuni</th></tr></thead><tbody id="pendingDocumentRows"><tr><td colspan="5">Se încarcă...</td></tr></tbody></table></div></div>
+      <div class="card">
+        <h1>Dashboard administrator</h1>
+        <p class="muted">Monitorizare flotă, comisioane și moderare.</p>
+        <div id="adminAlert" class="alert"></div>
+      </div>
+      
+      <div class="kpi-grid">
+        <div class="kpi" id="kpiActiveCarsBtn" style="cursor: pointer;" title="Apasă pentru detalii" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--line)'">
+          <div class="muted">Mașini active</div>
+          <div class="kpi-value" id="adminActiveCars">0</div>
+        </div>
+        
+        <div class="kpi" id="kpiProfitBtn" style="cursor: pointer;" title="Apasă pentru a vedea graficul" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--line)'">
+          <div class="muted">Profit platformă</div>
+          <div class="kpi-value" id="adminProfit">0 RON</div>
+        </div>
+        
+        <div class="kpi">
+          <div class="muted">Comision</div>
+          <div class="kpi-value">10%</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Ultimele rezervări</h2>
+        <ul id="adminLastReservations"><li>Se încarcă...</li></ul>
+      </div>
+      
+      <div class="card" id="pendingCars">
+        <h2>Mașini în așteptare</h2>
+        <div style="overflow:auto">
+          <table class="table">
+            <thead>
+              <tr><th>ID</th><th>Mașină</th><th>Locație</th><th>Preț</th><th>Acțiuni</th></tr>
+            </thead>
+            <tbody id="pendingCarRows">
+              <tr><td colspan="5">Se încarcă...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="card" id="pendingDocs">
+        <h2>Documente clienți</h2>
+        <div style="overflow:auto">
+          <table class="table">
+            <thead>
+              <tr><th>ID</th><th>Client</th><th>Email</th><th>Fișiere</th><th>Acțiuni</th></tr>
+            </thead>
+            <tbody id="pendingDocumentRows">
+              <tr><td colspan="5">Se încarcă...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
   </div>
+
+  <div id="activeCarsModal" class="modal-overlay hidden">
+    <div class="modal card" style="max-width: 800px; width: 100%;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="margin: 0; font-size: 20px;">Flota platformei</h2>
+        <button type="button" id="closeActiveCarsModal" class="btn btn-ghost" style="padding: 4px 8px;">✕</button>
+      </div>
+      <div style="max-height: 400px; overflow-y: auto;">
+        <table class="table">
+          <thead><tr><th>ID</th><th>Mașină</th><th>Locație</th><th>Clasă</th><th>Preț/zi</th></tr></thead>
+          <tbody id="activeCarRows"><tr><td colspan="5">Se încarcă...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="profitChartModal" class="modal-overlay hidden">
+    <div class="modal card" style="max-width: 700px; width: 100%;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="margin: 0; font-size: 20px;">Evoluție profit</h2>
+        <button type="button" id="closeProfitModal" class="btn btn-ghost" style="padding: 4px 8px;">✕</button>
+      </div>
+      <div style="position: relative; height: 320px; width: 100%;">
+        <canvas id="profitChartCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
 </main>
+
 <script src="/js/rapidrent.js"></script>
-</body></html>
+</body>
+</html>

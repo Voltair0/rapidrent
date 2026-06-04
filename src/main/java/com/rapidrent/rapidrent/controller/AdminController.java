@@ -70,4 +70,13 @@ public class AdminController {
     public ResponseEntity<AdminDashboardResponse> getDashboard() {
         return ResponseEntity.ok(dashboardService.getAdminDashboard());
     }
+    @GetMapping("/active")
+    public ResponseEntity<List<Car>> getActiveCars() {
+        return ResponseEntity.ok(carService.getActiveCars());
+    }
+
+    @GetMapping("/finance/chart")
+    public ResponseEntity<List<java.util.Map<String, Object>>> getProfitChart() {
+        return ResponseEntity.ok(dashboardService.getProfitChartData());
+    }
 }

@@ -94,4 +94,7 @@ public class CarService {
         
         return "Mașina și istoricul ei de rezervări au fost eliminate cu succes din platformă!";
     }
+    public List<Car> getActiveCars() {
+        return carRepository.findByStatus(CarStatus.APPROVED);
+    }
 }

@@ -412,6 +412,69 @@ async function initAdminPage() {
     await loadPendingCars();
     await loadPendingDocs();
   } catch (err) { RR.alertBox('adminAlert', err.message, false); }
+  // --- Logică Popup Mașini Active ---
+  const kpiActiveCarsBtn = document.getElementById('kpiActiveCarsBtn');
+  const activeCarsModal = document.getElementById('activeCarsModal');
+  const closeActiveCarsModal = document.getElementById('closeActiveCarsModal');
+  
+  if (kpiActiveCarsBtn && activeCarsModal) {
+    kpiActiveCarsBtn.addEventListener('click', async () => {
+      activeCarsModal.classList.remove('hidden');
+      const tbody = document.getElementById('activeCarRows');
+      tbody.innerHTML = '<tr><td colspan="5">Se încarcă...</td></tr>';
+      try {
+        const cars = await RR.api('/api/admin/cars/active', { headers: RR.headers(false) });
+        tbody.innerHTML = cars.length ? cars.map(c => `<tr>
+          <td>#${c.id}</td>
+          <td>${RR.escapeHtml(c.brand)} ${RR.escapeHtml(c.model)}</td>
+          <td>${RR.escapeHtml(c.location || '-')}</td>
+          <td>${RR.escapeHtml(c.category || '-')}</td>
+          <td>${RR.money(c.price)}</td>
+        </tr>`).join('') : '<tr><td colspan="5" class="muted">Nu există mașini active în platformă.</td></tr>';
+      } catch (err) { tbody.innerHTML = `<tr><td colspan="5" style="color:red">${err.message}</td></tr>`; }
+    });
+    closeActiveCarsModal.addEventListener('click', () => activeCarsModal.classList.add('hidden'));
+    activeCarsModal.addEventListener('click', (e) => { if (e.target === activeCarsModal) activeCarsModal.classList.add('hidden'); });
+  }
+
+  // --- Logică Popup Grafic Profit ---
+  const kpiProfitBtn = document.getElementById('kpiProfitBtn');
+  const profitChartModal = document.getElementById('profitChartModal');
+  const closeProfitModal = document.getElementById('closeProfitModal');
+  let profitChartInstance = null; // Stocăm instanța pentru a o distruge dacă redeschidem graficul
+
+  if (kpiProfitBtn && profitChartModal) {
+    kpiProfitBtn.addEventListener('click', async () => {
+      profitChartModal.classList.remove('hidden');
+      try {
+        const data = await RR.api('/api/admin/cars/finance/chart', { headers: RR.headers(false) });
+        const ctx = document.getElementById('profitChartCanvas').getContext('2d');
+        
+        if (profitChartInstance) profitChartInstance.destroy(); // Resetează canvas-ul
+        
+        profitChartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.map(d => d.month),
+            datasets: [{
+              label: 'Profit încasat (RON)',
+              data: data.map(d => d.profit),
+              backgroundColor: '#006ce4',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } },
+            plugins: { legend: { display: false } }
+          }
+        });
+      } catch (err) { alert('Eroare grafic: ' + err.message); }
+    });
+    closeProfitModal.addEventListener('click', () => profitChartModal.classList.add('hidden'));
+    profitChartModal.addEventListener('click', (e) => { if (e.target === profitChartModal) profitChartModal.classList.add('hidden'); });
+  }
 }
 
 async function loadPendingCars() {
