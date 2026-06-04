@@ -39,10 +39,10 @@ public class ReservationService {
     public List<Car> searchAvailableCars(String location, String category, String transmission, Double maxPrice) {
         return carRepository.searchAvailableCars(
                 CarStatus.APPROVED,
-                normalize(location),
-                normalize(category),
-                normalize(transmission),
-                maxPrice);
+                location == null ? "" : location.trim(),
+                category == null ? "" : category.trim(),
+                transmission == null ? "" : transmission.trim(),
+                maxPrice == null ? -1.0 : maxPrice);
     }
 
     public List<ReservationSummaryResponse> getClientReservations(Long clientId) {
@@ -107,9 +107,5 @@ public class ReservationService {
         reservationRepository.save(reservation);
 
         return "Rezervarea a fost anulată cu succes. Mașina este din nou disponibilă pe platformă.";
-    }
-
-    private String normalize(String value) {
-        return value == null || value.trim().isEmpty() ? null : value.trim();
     }
 }

@@ -26,10 +26,10 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Query("""
             SELECT c FROM Car c
             WHERE c.status = :status
-              AND (:location IS NULL OR LOWER(COALESCE(c.location, '')) LIKE LOWER(CONCAT('%', :location, '%')))
-              AND (:category IS NULL OR LOWER(COALESCE(c.category, '')) = LOWER(:category))
-              AND (:transmission IS NULL OR LOWER(COALESCE(c.transmission, '')) = LOWER(:transmission))
-              AND (:maxPrice IS NULL OR c.price <= :maxPrice)
+              AND (:location = '' OR LOWER(COALESCE(c.location, '')) LIKE LOWER(CONCAT('%', :location, '%')))
+              AND (:category = '' OR LOWER(COALESCE(c.category, '')) = LOWER(:category))
+              AND (:transmission = '' OR LOWER(COALESCE(c.transmission, '')) = LOWER(:transmission))
+              AND (:maxPrice < 0 OR c.price <= :maxPrice)
             ORDER BY c.price ASC
             """)
     List<Car> searchAvailableCars(
