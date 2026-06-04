@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("SELECT COALESCE(SUM(r.totalPrice), 0) FROM Reservation r WHERE r.car.provider.id = :providerId AND r.status = 'ACTIVE'")
     double sumProviderRevenue(@Param("providerId") Long providerId);
+
+    @Modifying
+    @Query("DELETE FROM Reservation r WHERE r.car.id = :carId")
+    void deleteByCarId(@Param("carId") Long carId);
 }

@@ -24,7 +24,28 @@
       <input class="input" name="email" type="email" placeholder="Email" required>
       <input class="input" name="password" type="password" placeholder="Parolă" required minlength="6">
       <label class="check"><input type="checkbox" name="isProvider"> Vreau cont de furnizor pentru a lista mașini.</label>
-      <label class="check"><input type="checkbox" name="gdprConsent" required> Accept termenii GDPR și prelucrarea datelor pentru funcționarea platformei.</label>
+      <label class="check">
+        <input type="checkbox" name="gdprConsent" required> 
+        Accept <a href="#" id="openGdprModal" style="color: var(--blue); text-decoration: underline;">termenii GDPR</a> și prelucrarea datelor pentru funcționarea platformei.
+      </label>
+
+      <div id="gdprModal" class="modal-overlay hidden">
+        <div class="modal card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h2 style="margin: 0; font-size: 20px;">Termeni GDPR și Date Personale</h2>
+            <button type="button" id="closeGdprModal" class="btn btn-ghost" style="padding: 4px 8px;">✕</button>
+          </div>
+          <div style="max-height: 300px; overflow-y: auto; font-size: 14px; color: var(--muted); line-height: 1.6; padding-right: 8px;">
+            <p>Platforma RapidRent colectează și prelucrează datele dumneavoastră cu caracter personal (nume, adresă de email, imagini ale cărții de identitate și permisului auto) exclusiv în scopul facilitării procesului de închiriere auto, validării identității și conformării cu normele legale și fiscale în vigoare.</p>
+            <p><strong>Stocarea datelor:</strong> Documentele încărcate sunt stocate în mod securizat pe serverele noastre și sunt accesibile doar administratorilor platformei pentru validare. Acestea nu sunt partajate cu terți în scopuri de marketing.</p>
+            <p><strong>Drepturile dumneavoastră:</strong> Conform Regulamentului (UE) 2016/679 (GDPR), aveți dreptul la informare, acces, rectificare și ștergere a datelor ("dreptul de a fi uitat"). Puteți solicita ștergerea contului și a tuturor datelor asociate în orice moment.</p>
+            <p>Prin bifarea căsuței și crearea contului, vă dați consimțământul explicit și neechivoc pentru prelucrarea acestor informații de către RapidRent.</p>
+          </div>
+          <div style="margin-top: 20px; text-align: right;">
+            <button type="button" id="acceptGdprModal" class="btn btn-primary">Am înțeles și accept</button>
+          </div>
+        </div>
+      </div>
       <button class="btn btn-primary btn-block" type="submit">Înregistrează contul</button>
     </form>
     <p class="muted small">Ai deja cont? <a href="/ui/login"><strong>Autentifică-te</strong></a></p>

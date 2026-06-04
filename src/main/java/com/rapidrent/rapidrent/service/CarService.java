@@ -1,15 +1,19 @@
 package com.rapidrent.rapidrent.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.rapidrent.rapidrent.dto.CarRequest;
 import com.rapidrent.rapidrent.model.Car;
 import com.rapidrent.rapidrent.model.CarStatus;
 import com.rapidrent.rapidrent.model.Role;
 import com.rapidrent.rapidrent.model.User;
 import com.rapidrent.rapidrent.repository.CarRepository;
+import com.rapidrent.rapidrent.repository.ReservationRepository;
 import com.rapidrent.rapidrent.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class CarService {
@@ -19,6 +23,9 @@ public class CarService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     public String addCar(CarRequest request) {
         User provider = userRepository.findById(request.getProviderId())
@@ -73,5 +80,18 @@ public class CarService {
 
     private String defaultIfBlank(String value, String fallback) {
         return value == null || value.trim().isEmpty() ? fallback : value.trim();
+    }
+
+    @Transactional
+    public String deleteCar(Long carId) {
+        if (!carRepository.existsById(carId)) {
+            throw new RuntimeException("Eroare: Mașina nu a fost găsită.");
+        }
+
+       reservationRepository.deleteByCarId(carId);
+        
+        carRepository.deleteById(carId);
+        
+        return "Mașina și istoricul ei de rezervări au fost eliminate cu succes din platformă!";
     }
 }

@@ -87,7 +87,7 @@ const RR = (() => {
   function readSearchParams() {
     const params = new URLSearchParams(window.location.search);
     return {
-      location: params.get('location') || '',
+      keyword: params.get('keyword') || params.get('location') || '', // Păstrăm location ca un fallback de siguranță
       startDate: params.get('startDate') || '',
       endDate: params.get('endDate') || '',
       category: params.get('category') || '',
@@ -140,7 +140,7 @@ const RR = (() => {
     syncSearchForm(form);
     const params = readSearchParams();
     const apiParams = new URLSearchParams();
-    ['location', 'category', 'transmission', 'maxPrice'].forEach(key => {
+    ['keyword', 'category', 'transmission', 'maxPrice'].forEach(key => {
       if (params[key]) apiParams.set(key, params[key]);
     });
     list.innerHTML = '<div class="card">Se încarcă mașinile disponibile...</div>';
@@ -184,6 +184,39 @@ const RR = (() => {
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Funcționalitate Modal GDPR ---
+  const openGdprBtn = document.getElementById('openGdprModal');
+  const closeGdprBtn = document.getElementById('closeGdprModal');
+  const acceptGdprBtn = document.getElementById('acceptGdprModal');
+  const gdprModal = document.getElementById('gdprModal');
+  const gdprCheckbox = document.querySelector('input[name="gdprConsent"]');
+
+  if (openGdprBtn && gdprModal) {
+    // Deschide modalul la click pe link
+    openGdprBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      gdprModal.classList.remove('hidden');
+    });
+
+    // Funcție pentru ascunderea modalului
+    const closeModal = () => gdprModal.classList.add('hidden');
+
+    // Închide la apăsarea lui X
+    if (closeGdprBtn) closeGdprBtn.addEventListener('click', closeModal);
+
+    // Butonul "Am înțeles" bifează automat căsuța și închide modalul
+    if (acceptGdprBtn) {
+      acceptGdprBtn.addEventListener('click', () => {
+        closeModal();
+        if (gdprCheckbox) gdprCheckbox.checked = true;
+      });
+    }
+
+    // Închide modalul dacă utilizatorul dă click în afara cutiei albe (pe overlay-ul întunecat)
+    gdprModal.addEventListener('click', (e) => {
+      if (e.target === gdprModal) closeModal();
+    });
+  }
   RR.updateNav();
 
   const homeSearch = document.getElementById('homeSearchForm');
@@ -314,9 +347,35 @@ async function initProviderPage() {
     const dashboard = await RR.api(`/api/provider/cars/dashboard/${u.id}`, { headers: RR.headers(false) });
     document.getElementById('providerCarsCount').textContent = dashboard.totalCarsListed;
     document.getElementById('providerIncome').textContent = RR.money(dashboard.netIncome);
+    
     const cars = await RR.api(`/api/provider/cars/provider/${u.id}`, { headers: RR.headers(false) });
     const tbody = document.getElementById('providerCarRows');
-    tbody.innerHTML = cars.length ? cars.map(c => `<tr><td>#${c.id}</td><td>${RR.escapeHtml(c.brand)} ${RR.escapeHtml(c.model)}</td><td>${RR.escapeHtml(c.location || '-')}</td><td>${RR.money(c.price)}</td><td>${RR.escapeHtml(c.status)}</td></tr>`).join('') : '<tr><td colspan="5" class="muted">Nu ai adăugat încă mașini.</td></tr>';
+    
+    tbody.innerHTML = cars.length ? cars.map(c => `<tr>
+      <td>#${c.id}</td>
+      <td>${RR.escapeHtml(c.brand)} ${RR.escapeHtml(c.model)}</td>
+      <td>${RR.escapeHtml(c.location || '-')}</td>
+      <td>${RR.money(c.price)}</td>
+      <td>${RR.escapeHtml(c.status)}</td>
+      <td>
+        <button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" data-delete-car="${c.id}">Șterge</button>
+      </td>
+    </tr>`).join('') : '<tr><td colspan="6" class="muted">Nu ai adăugat încă mașini.</td></tr>';
+
+    tbody.querySelectorAll('[data-delete-car]').forEach(btn => btn.addEventListener('click', async () => {
+      if (!confirm('Sigur vrei să ștergi definitiv această mașină din flotă?')) return;
+      try {
+        const msg = await RR.api(`/api/provider/cars/delete/${btn.dataset.deleteCar}`, { 
+          method: 'DELETE', 
+          headers: RR.headers(false) 
+        });
+        RR.alertBox('providerAlert', msg, true);
+        setTimeout(() => location.reload(), 900);
+      } catch (err) { 
+        RR.alertBox('providerAlert', err.message, false); 
+      }
+    }));
+
   } catch (err) { RR.alertBox('providerAlert', err.message, false); }
 }
 

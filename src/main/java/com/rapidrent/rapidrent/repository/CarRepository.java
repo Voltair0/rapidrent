@@ -26,7 +26,10 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Query("""
             SELECT c FROM Car c
             WHERE c.status = :status
-              AND (:location = '' OR LOWER(COALESCE(c.location, '')) LIKE LOWER(CONCAT('%', :location, '%')))
+              AND (:keyword = '' OR 
+                   LOWER(COALESCE(c.location, '')) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                   LOWER(COALESCE(c.brand, '')) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                   LOWER(COALESCE(c.model, '')) LIKE LOWER(CONCAT('%', :keyword, '%')))
               AND (:category = '' OR LOWER(COALESCE(c.category, '')) = LOWER(:category))
               AND (:transmission = '' OR LOWER(COALESCE(c.transmission, '')) = LOWER(:transmission))
               AND (:maxPrice < 0 OR c.price <= :maxPrice)
@@ -34,7 +37,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             """)
     List<Car> searchAvailableCars(
             @Param("status") CarStatus status,
-            @Param("location") String location,
+            @Param("keyword") String keyword,
             @Param("category") String category,
             @Param("transmission") String transmission,
             @Param("maxPrice") Double maxPrice);

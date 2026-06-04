@@ -21,7 +21,19 @@
     <section class="form-stack">
       <div class="card"><h1>Dashboard furnizor: <span id="providerName"></span></h1><div id="providerAlert" class="alert"></div></div>
       <div class="kpi-grid"><div class="kpi"><div class="muted">Mașini listate</div><div class="kpi-value" id="providerCarsCount">0</div></div><div class="kpi"><div class="muted">Venit net estimat</div><div class="kpi-value" id="providerIncome">0 RON</div></div><div class="kpi"><div class="muted">Comision platformă</div><div class="kpi-value">10%</div></div></div>
-      <div class="card"><div class="section-title"><h2>Flota mea</h2><a class="btn btn-primary" href="/ui/provider/cars/new">Adaugă mașină</a></div><div style="overflow:auto"><table class="table"><thead><tr><th>ID</th><th>Mașină</th><th>Locație</th><th>Preț/zi</th><th>Status</th></tr></thead><tbody id="providerCarRows"><tr><td colspan="5">Se încarcă...</td></tr></tbody></table></div></div>
+      <div class="card">
+        <div class="section-title"><h2>Flota mea</h2><a class="btn btn-primary" href="/ui/provider/cars/new">Adaugă mașină</a></div>
+        <div style="overflow:auto">
+          <table class="table">
+            <thead>
+              <tr><th>ID</th><th>Mașină</th><th>Locație</th><th>Preț/zi</th><th>Status</th><th>Acțiuni</th></tr>
+            </thead>
+            <tbody id="providerCarRows">
+              <tr><td colspan="6">Se încarcă...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>  
     </section>
   </div>
 </main>

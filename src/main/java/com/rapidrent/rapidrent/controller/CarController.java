@@ -46,4 +46,13 @@ public class CarController {
     public ResponseEntity<ProviderDashboardResponse> getProviderDashboard(@PathVariable Long providerId) {
         return ResponseEntity.ok(dashboardService.getProviderDashboard(providerId));
     }
+    @org.springframework.web.bind.annotation.DeleteMapping("/delete/{carId}")
+    public ResponseEntity<String> deleteCar(@PathVariable Long carId) {
+        try {
+            String message = carService.deleteCar(carId);
+            return ResponseEntity.ok(message);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

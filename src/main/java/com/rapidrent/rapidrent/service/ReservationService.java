@@ -36,10 +36,10 @@ public class ReservationService {
         return carRepository.findByStatus(CarStatus.APPROVED);
     }
 
-    public List<Car> searchAvailableCars(String location, String category, String transmission, Double maxPrice) {
+    public List<Car> searchAvailableCars(String keyword, String category, String transmission, Double maxPrice) {
         return carRepository.searchAvailableCars(
                 CarStatus.APPROVED,
-                location == null ? "" : location.trim(),
+                keyword == null ? "" : keyword.trim(),
                 category == null ? "" : category.trim(),
                 transmission == null ? "" : transmission.trim(),
                 maxPrice == null ? -1.0 : maxPrice);

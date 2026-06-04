@@ -31,10 +31,10 @@ public class DashboardService {
         double totalRevenue = reservationRepository.sumTotalRevenue();
         response.setTotalPlatformProfit(totalRevenue * COMMISSION_RATE);
 
-        // Luăm ultimele 5 rezervări și le transformăm într-un text ușor de citit
+        // Modificarea este aici: adăugăm | Status: " + r.getStatus()
         response.setLast5Reservations(reservationRepository.findTop5ByOrderByStartDateDesc()
                 .stream()
-                .map(r -> "Rezervare #" + r.getId() + " | Mașina: " + r.getCar().getBrand() + " | Cost: " + r.getTotalPrice() + " RON")
+                .map(r -> "Rezervare #" + r.getId() + " | Mașina: " + r.getCar().getBrand() + " | Cost: " + r.getTotalPrice() + " RON | Status: " + r.getStatus())
                 .collect(Collectors.toList()));
 
         return response;

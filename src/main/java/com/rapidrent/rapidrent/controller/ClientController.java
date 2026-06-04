@@ -27,11 +27,11 @@ public class ClientController {
 
     @GetMapping("/cars")
     public ResponseEntity<List<Car>> getAvailableCars(
-            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String transmission,
             @RequestParam(required = false) Double maxPrice) {
-        return ResponseEntity.ok(reservationService.searchAvailableCars(location, category, transmission, maxPrice));
+        return ResponseEntity.ok(reservationService.searchAvailableCars(keyword, category, transmission, maxPrice));
     }
 
     @PostMapping("/reserve")
