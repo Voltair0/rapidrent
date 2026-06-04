@@ -29,7 +29,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail(); // Folosim email-ul ca identificator principal
+        return user.getEmail(); 
     }
 
     @Override

@@ -40,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        jwt = authHeader.substring(7); // Scoatem cuvântul "Bearer "
+        jwt = authHeader.substring(7);
         userEmail = jwtUtil.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -437,11 +437,10 @@ async function initAdminPage() {
     activeCarsModal.addEventListener('click', (e) => { if (e.target === activeCarsModal) activeCarsModal.classList.add('hidden'); });
   }
 
-  // --- Logică Popup Grafic Profit ---
   const kpiProfitBtn = document.getElementById('kpiProfitBtn');
   const profitChartModal = document.getElementById('profitChartModal');
   const closeProfitModal = document.getElementById('closeProfitModal');
-  let profitChartInstance = null; // Stocăm instanța pentru a o distruge dacă redeschidem graficul
+  let profitChartInstance = null; 
 
   if (kpiProfitBtn && profitChartModal) {
     kpiProfitBtn.addEventListener('click', async () => {
@@ -450,7 +449,7 @@ async function initAdminPage() {
         const data = await RR.api('/api/admin/cars/finance/chart', { headers: RR.headers(false) });
         const ctx = document.getElementById('profitChartCanvas').getContext('2d');
         
-        if (profitChartInstance) profitChartInstance.destroy(); // Resetează canvas-ul
+        if (profitChartInstance) profitChartInstance.destroy(); 
         
         profitChartInstance = new Chart(ctx, {
           type: 'bar',

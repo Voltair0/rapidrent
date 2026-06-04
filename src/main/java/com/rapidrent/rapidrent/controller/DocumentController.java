@@ -18,7 +18,6 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-    // Folosim {userId} în URL pentru a ști cărui cont îi atașăm documentele
     @PostMapping("/upload/{userId}")
     public ResponseEntity<String> uploadDocs(
             @PathVariable Long userId,

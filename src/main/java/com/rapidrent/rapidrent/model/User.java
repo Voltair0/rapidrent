@@ -27,7 +27,7 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private String username; // Adaugă această linie
+    private String username;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -40,9 +40,9 @@ public class User {
     @Column(name = "document_status", nullable = false)
     private DocumentStatus documentStatus = DocumentStatus.NONE;
 
-    @Lob // Spune bazei de date să rezerve spațiu pentru fișiere mari (Large Object)
-    private byte[] idCardImage; // Poza de la buletin
+    @Lob
+    private byte[] idCardImage;
 
     @Lob
-    private byte[] driverLicenseImage; // Poza de la permis
+    private byte[] driverLicenseImage;
 }

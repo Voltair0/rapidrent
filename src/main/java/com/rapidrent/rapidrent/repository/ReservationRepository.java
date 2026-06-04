@@ -24,11 +24,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByClientIdOrderByStartDateDesc(Long clientId);
 
-    @Query("SELECT COALESCE(SUM(r.totalPrice), 0) FROM Reservation r WHERE r.status = 'ACTIVE'")
-    double sumTotalRevenue();
-
-    @Query("SELECT COALESCE(SUM(r.totalPrice), 0) FROM Reservation r WHERE r.car.provider.id = :providerId AND r.status = 'ACTIVE'")
-    double sumProviderRevenue(@Param("providerId") Long providerId);
+    List<Reservation> findByStatus(String status);
+    
+    List<Reservation> findByCarProviderIdAndStatus(Long providerId, String status);
 
     @Modifying
     @Query("DELETE FROM Reservation r WHERE r.car.id = :carId")

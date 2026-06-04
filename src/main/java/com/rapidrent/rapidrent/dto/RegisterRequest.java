@@ -9,6 +9,6 @@ public class RegisterRequest {
     private String email;
     private String password;
     @JsonProperty("isProvider")
-    private boolean isProvider; // Bifa pentru a deveni furnizor
-    private boolean gdprConsent; // Bifa obligatorie pentru regulamentul GDPR
+    private boolean isProvider;
+    private boolean gdprConsent;
 }

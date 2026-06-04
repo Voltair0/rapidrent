@@ -39,5 +39,5 @@ public class Reservation {
     private Double totalPrice;
 
     @Column(nullable = false)
-    private String status = "ACTIVE"; // Poate fi ACTIVE, CANCELLED, COMPLETED
+    private String status = "ACTIVE";
 }
