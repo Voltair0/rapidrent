@@ -140,7 +140,7 @@ const RR = (() => {
     syncSearchForm(form);
     const params = readSearchParams();
     const apiParams = new URLSearchParams();
-    ['keyword', 'category', 'transmission', 'maxPrice'].forEach(key => {
+    ['keyword', 'category', 'startDate', 'endDate', 'transmission', 'maxPrice'].forEach(key => {
       if (params[key]) apiParams.set(key, params[key]);
     });
     list.innerHTML = '<div class="card">Se încarcă mașinile disponibile...</div>';
@@ -156,17 +156,26 @@ const RR = (() => {
       list.innerHTML = `<div class="card"><h3>Eroare</h3><p class="muted">${escapeHtml(err.message)}</p></div>`;
     }
   }
-  async function reserveFromButton(event) {
+async function reserveFromButton(event) {
     const u = requireAuth('ROLE_CLIENT');
     if (!u) return;
     const btn = event.currentTarget;
-    let startDate = btn.dataset.start;
-    let endDate = btn.dataset.end;
+
+    const searchForm = document.getElementById('carsSearchForm');
+    let startDate = searchForm && searchForm.querySelector('[name="startDate"]').value 
+                    ? searchForm.querySelector('[name="startDate"]').value 
+                    : btn.dataset.start;
+    let endDate = searchForm && searchForm.querySelector('[name="endDate"]').value 
+                  ? searchForm.querySelector('[name="endDate"]').value 
+                  : btn.dataset.end;
+
     if (!startDate || !endDate) {
       startDate = prompt('Data preluării (YYYY-MM-DD):', new Date().toISOString().slice(0,10));
       endDate = prompt('Data predării (YYYY-MM-DD):', new Date(Date.now()+86400000).toISOString().slice(0,10));
     }
+    
     if (!startDate || !endDate) return;
+
     try {
       const message = await api('/api/client/reserve', {
         method: 'POST',

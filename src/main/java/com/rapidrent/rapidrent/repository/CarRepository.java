@@ -33,6 +33,13 @@ public interface CarRepository extends JpaRepository<Car, Long> {
               AND (:category = '' OR LOWER(COALESCE(c.category, '')) = LOWER(:category))
               AND (:transmission = '' OR LOWER(COALESCE(c.transmission, '')) = LOWER(:transmission))
               AND (:maxPrice < 0 OR c.price <= :maxPrice)
+              AND (cast(:startDate as date) IS NULL OR cast(:endDate as date) IS NULL OR NOT EXISTS (
+                  SELECT r FROM Reservation r
+                  WHERE r.car = c
+                    AND r.status = 'ACTIVE'
+                    AND r.startDate < :endDate
+                    AND r.endDate > :startDate
+              ))
             ORDER BY c.price ASC
             """)
     List<Car> searchAvailableCars(
@@ -40,7 +47,9 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             @Param("keyword") String keyword,
             @Param("category") String category,
             @Param("transmission") String transmission,
-            @Param("maxPrice") Double maxPrice);
+            @Param("maxPrice") Double maxPrice,
+            @Param("startDate") java.time.LocalDate startDate,
+            @Param("endDate") java.time.LocalDate endDate);
 
     List<Car> findByProviderIdOrderByIdDesc(Long providerId);
 

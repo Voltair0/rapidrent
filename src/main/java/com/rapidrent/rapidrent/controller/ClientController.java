@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 import com.rapidrent.rapidrent.dto.ReservationRequest;
 import com.rapidrent.rapidrent.dto.ReservationSummaryResponse;
@@ -30,8 +32,11 @@ public class ClientController {
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String transmission,
-            @RequestParam(required = false) Double maxPrice) {
-        return ResponseEntity.ok(reservationService.searchAvailableCars(keyword, category, transmission, maxPrice));
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        
+        return ResponseEntity.ok(reservationService.searchAvailableCars(keyword, category, transmission, maxPrice, startDate, endDate));
     }
 
     @PostMapping("/reserve")

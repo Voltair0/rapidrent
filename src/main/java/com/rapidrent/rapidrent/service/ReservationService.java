@@ -36,15 +36,18 @@ public class ReservationService {
         return carRepository.findByStatus(CarStatus.APPROVED);
     }
 
-    public List<Car> searchAvailableCars(String keyword, String category, String transmission, Double maxPrice) {
+    public List<Car> searchAvailableCars(String keyword, String category, String transmission, Double maxPrice, LocalDate startDate, LocalDate endDate) {
         return carRepository.searchAvailableCars(
                 CarStatus.APPROVED,
                 keyword == null ? "" : keyword.trim(),
                 category == null ? "" : category.trim(),
                 transmission == null ? "" : transmission.trim(),
-                maxPrice == null ? -1.0 : maxPrice);
+                maxPrice == null ? -1.0 : maxPrice,
+                startDate,
+                endDate);
     }
-
+    
+    @Transactional(readOnly = true)
     public List<ReservationSummaryResponse> getClientReservations(Long clientId) {
         return reservationRepository.findByClientIdOrderByStartDateDesc(clientId)
                 .stream()
