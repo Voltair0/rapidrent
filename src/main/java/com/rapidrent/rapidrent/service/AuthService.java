@@ -4,6 +4,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rapidrent.rapidrent.dto.RegisterRequest;
 import com.rapidrent.rapidrent.model.DocumentStatus;
@@ -54,6 +55,7 @@ public class AuthService {
         return "Utilizatorul a fost înregistrat cu succes! Te rugăm să îți confirmi email-ul.";
     }
 
+    @Transactional
     public String loginUser(String email, String rawPassword) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Eroare: Email-ul nu a fost găsit.")); 

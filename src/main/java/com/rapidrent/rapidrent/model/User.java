@@ -1,9 +1,11 @@
 package com.rapidrent.rapidrent.model;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,8 +43,10 @@ public class User {
     private DocumentStatus documentStatus = DocumentStatus.NONE;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] idCardImage;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] driverLicenseImage;
 }
