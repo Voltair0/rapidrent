@@ -193,7 +193,6 @@ async function reserveFromButton(event) {
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Funcționalitate Modal GDPR ---
   const openGdprBtn = document.getElementById('openGdprModal');
   const closeGdprBtn = document.getElementById('closeGdprModal');
   const acceptGdprBtn = document.getElementById('acceptGdprModal');
@@ -201,19 +200,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const gdprCheckbox = document.querySelector('input[name="gdprConsent"]');
 
   if (openGdprBtn && gdprModal) {
-    // Deschide modalul la click pe link
     openGdprBtn.addEventListener('click', (e) => {
       e.preventDefault();
       gdprModal.classList.remove('hidden');
     });
 
-    // Funcție pentru ascunderea modalului
     const closeModal = () => gdprModal.classList.add('hidden');
 
-    // Închide la apăsarea lui X
     if (closeGdprBtn) closeGdprBtn.addEventListener('click', closeModal);
 
-    // Butonul "Am înțeles" bifează automat căsuța și închide modalul
     if (acceptGdprBtn) {
       acceptGdprBtn.addEventListener('click', () => {
         closeModal();
@@ -221,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Închide modalul dacă utilizatorul dă click în afara cutiei albe (pe overlay-ul întunecat)
     gdprModal.addEventListener('click', (e) => {
       if (e.target === gdprModal) closeModal();
     });
@@ -421,7 +415,6 @@ async function initAdminPage() {
     await loadPendingCars();
     await loadPendingDocs();
   } catch (err) { RR.alertBox('adminAlert', err.message, false); }
-  // --- Logică Popup Mașini Active ---
   const kpiActiveCarsBtn = document.getElementById('kpiActiveCarsBtn');
   const activeCarsModal = document.getElementById('activeCarsModal');
   const closeActiveCarsModal = document.getElementById('closeActiveCarsModal');
